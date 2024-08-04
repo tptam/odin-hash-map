@@ -4,7 +4,7 @@ class HashMap {
   #capacity = 16;
   #loadFactor = 0.8;
   #buckets;
-  #size = 0;
+  #length = 0;
 
   constructor() {
     this.#buckets = [];
@@ -28,6 +28,7 @@ class HashMap {
     const node = bucket.find(key);
     if (node === null) {
       bucket.append(key, value);
+      this.#length++;
     } else {
       node.value = value;
     }
@@ -59,8 +60,13 @@ class HashMap {
       return false;
     } else {
       bucket.removeAt(index);
+      this.#length--;
       return true;
     }
+  }
+
+  length() {
+    return this.#length;
   }
 
   toString() {
