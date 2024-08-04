@@ -1,10 +1,16 @@
+import { LinkedList } from "./linked-list.js";
+
 class HashMap {
   #capacity = 16;
   #loadFactor = 0.8;
   #buckets;
+  #size = 0;
 
   constructor() {
-    buckets = [];
+    this.#buckets = [];
+    for (let i = 0; i < this.#capacity; i++) {
+      this.#buckets.push(null);
+    }
   }
 
   hash(key) {
@@ -15,4 +21,35 @@ class HashMap {
     }
     return hashCode;
   }
+
+  set(key, value) {
+    const hashCode = this.hash(key);
+    if (this.#buckets[hashCode] === null) {
+      const list = new LinkedList();
+      list.append(key, value);
+      this.#buckets[hashCode] = list;
+      return;
+    }
+    const bucket = this.#buckets[hashCode];
+    const oldNode = bucket.find(key);
+    if (oldNode === null) {
+      bucket.append(key, value);
+    } else {
+      oldNode.value = value;
+    }
+  }
+
+  toString() {
+    let string = "";
+    this.#buckets.forEach((bucket, index) => {
+      if (bucket === null) {
+        string += `${index}: null` + "\n";
+      } else {
+        string += `${index}: ${bucket.toString()}` + "\n";
+      }
+    });
+    return string;
+  }
 }
+
+export { HashMap };
