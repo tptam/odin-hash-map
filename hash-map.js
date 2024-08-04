@@ -24,18 +24,18 @@ class HashMap {
 
   set(key, value) {
     const hashCode = this.hash(key);
-    if (this.#buckets[hashCode] === null) {
+    const bucket = this.#buckets[hashCode];
+    if (bucket === null) {
       const list = new LinkedList();
       list.append(key, value);
-      this.#buckets[hashCode] = list;
+      bucket = list;
       return;
     }
-    const bucket = this.#buckets[hashCode];
-    const oldNode = bucket.find(key);
-    if (oldNode === null) {
+    const node = bucket.find(key);
+    if (node === null) {
       bucket.append(key, value);
     } else {
-      oldNode.value = value;
+      node.value = value;
     }
   }
 
