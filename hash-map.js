@@ -28,7 +28,7 @@ class HashMap {
     if (bucket === null) {
       const list = new LinkedList();
       list.append(key, value);
-      bucket = list;
+      this.#buckets[hashCode] = list;
       return;
     }
     const node = bucket.find(key);
@@ -51,6 +51,16 @@ class HashMap {
     } else {
       return node.value;
     }
+  }
+
+  has(key) {
+    const hashCode = this.hash(key);
+    const bucket = this.#buckets[hashCode];
+    if (bucket === null) {
+      return false;
+    }
+    const node = bucket.find(key);
+    return node !== null;
   }
 
   toString() {
