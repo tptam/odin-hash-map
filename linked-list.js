@@ -194,6 +194,36 @@ class LinkedList {
   clear() {
     this.#head = undefined;
   }
+
+  keys() {
+    let current = this.#head;
+    const arr = [];
+    while (current !== undefined && current !== null) {
+      arr.push(current.key);
+      current = current.nextNode;
+    }
+    return arr;
+  }
+
+  values() {
+    let current = this.#head;
+    const arr = [];
+    while (current !== undefined && current !== null) {
+      arr.push(current.value);
+      current = current.nextNode;
+    }
+    return arr;
+  }
+
+  entries() {
+    let current = this.#head;
+    const arr = [];
+    while (current !== undefined && current !== null) {
+      arr.push([current.key, current.value]);
+      current = current.nextNode;
+    }
+    return arr;
+  }
 }
 
 export { LinkedList };

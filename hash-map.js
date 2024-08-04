@@ -85,39 +85,24 @@ class HashMap {
   }
 
   keys() {
-    const result = [];
-    this.#buckets.forEach((bucket) => {
-      let current = bucket.head();
-      while (current !== undefined && current !== null) {
-        result.push(current.key);
-        current = current.nextNode;
-      }
-    });
-    return result;
+    return this.#buckets.reduce(
+      (acc, bucket) => [...acc, ...bucket.keys()],
+      []
+    );
   }
 
   values() {
-    const result = [];
-    this.#buckets.forEach((bucket) => {
-      let current = bucket.head();
-      while (current !== undefined && current !== null) {
-        result.push(current.value);
-        current = current.nextNode;
-      }
-    });
-    return result;
+    return this.#buckets.reduce(
+      (acc, bucket) => [...acc, ...bucket.values()],
+      []
+    );
   }
 
   entries() {
-    const result = [];
-    this.#buckets.forEach((bucket) => {
-      let current = bucket.head();
-      while (current !== undefined && current !== null) {
-        result.push([current.key, current.value]);
-        current = current.nextNode;
-      }
-    });
-    return result;
+    return this.#buckets.reduce(
+      (acc, bucket) => [...acc, ...bucket.entries()],
+      []
+    );
   }
 
   grow() {
