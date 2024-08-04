@@ -3,21 +3,24 @@ import { createNode } from "./node.js";
 class LinkedList {
   #head;
   constructor() {}
-  append(value) {
+  append(key, value) {
     if (this.#head === undefined) {
       this.#head = createNode();
       this.#head.value = value;
+      this.#head.key = key;
     } else {
       const newNode = createNode();
+      newNode.key = key;
       newNode.value = value;
       this.tail().nextNode = newNode;
     }
   }
-  prepend(value) {
+  prepend(key, value) {
     if (this.#head === undefined) {
-      this.append(value);
+      this.append(key, value);
     } else {
       const newNode = createNode();
+      newNode.key = key;
       newNode.value = value;
       newNode.nextNode = this.#head;
       this.#head = newNode;
@@ -82,30 +85,28 @@ class LinkedList {
     return tail;
   }
 
-  contains(value) {
+  contains(key) {
     if (this.#head === undefined) {
       return false;
     }
     let current = this.#head;
     while (current !== null) {
-      if (current.value === value) {
+      if (current.key === key) {
         return true;
       }
       current = current.nextNode;
     }
     return false;
   }
-  find(value) {
+  find(key) {
     if (this.#head === undefined) {
       return null;
     }
     let current = this.#head;
-    let count = 0;
     while (current !== null) {
-      if (current.value === value) {
-        return count;
+      if (current.key === key) {
+        return current;
       }
-      count++;
       current = current.nextNode;
     }
     return null;
@@ -121,7 +122,7 @@ class LinkedList {
         string += "null";
         break;
       } else {
-        string += `( ${current.value} ) -> `;
+        string += `( ${current.key} ) -> `;
         current = current.nextNode;
       }
     }
@@ -129,9 +130,9 @@ class LinkedList {
   }
 
   //   Extra credit
-  insertAt(value, index) {
+  insertAt(key, value, index) {
     if (this.#head === undefined) {
-      this.append(value);
+      this.append(key, value);
       return;
     }
     const size = this.size();
@@ -140,14 +141,15 @@ class LinkedList {
       return;
     }
     if (index <= 0) {
-      this.prepend(value);
+      this.prepend(key, value);
       return;
     }
     if (index >= size) {
-      this.append(value);
+      this.append(key, value);
       return;
     }
     const newNode = createNode();
+    newNode.key = key;
     newNode.value = value;
     newNode.nextNode = this.at(index);
     this.at(index - 1).nextNode = newNode;
