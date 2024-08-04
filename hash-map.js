@@ -51,6 +51,18 @@ class HashMap {
     return node !== null;
   }
 
+  remove(key) {
+    const hashCode = this.hash(key);
+    const bucket = this.#buckets[hashCode];
+    const index = bucket.findIndex(key);
+    if (index === null) {
+      return false;
+    } else {
+      bucket.removeAt(index);
+      return true;
+    }
+  }
+
   toString() {
     let string = "";
     this.#buckets.forEach((bucket, index) => {
