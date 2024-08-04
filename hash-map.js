@@ -1,12 +1,14 @@
 import { LinkedList } from "./linked-list.js";
 
 class HashMap {
-  #capacity = 16;
-  #loadFactor = 0.8;
+  #capacity;
+  #loadFactor;
   #buckets;
   #length = 0;
 
-  constructor() {
+  constructor(capacity = 16, loadFactor = 0.75) {
+    this.#capacity = capacity;
+    this.#loadFactor = loadFactor;
     this.#buckets = [];
     for (let i = 0; i < this.#capacity; i++) {
       this.#buckets.push(new LinkedList());
