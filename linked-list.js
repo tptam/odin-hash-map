@@ -191,6 +191,9 @@ class LinkedList {
     }
     this.at(index - 1).nextNode = this.at(index + 1);
   }
+  clear() {
+    this.#head = undefined;
+  }
 }
 
 export { LinkedList };
