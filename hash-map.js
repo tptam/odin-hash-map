@@ -29,6 +29,9 @@ class HashMap {
     if (node === null) {
       bucket.append(key, value);
       this.#length++;
+      if (this.#length > this.#capacity * this.#loadFactor) {
+        this.grow();
+      }
     } else {
       node.value = value;
     }
@@ -108,6 +111,18 @@ class HashMap {
       }
     });
     return result;
+  }
+
+  grow() {
+    // Double the capacity
+    // https://www.geeksforgeeks.org/load-factor-in-hashmap-in-java-with-examples/
+    const entries = this.entries();
+    this.clear();
+    this.#capacity *= 2;
+    for (let i = this.#capacity / 2; i < this.#capacity; i++) {
+      this.#buckets[i] = new LinkedList();
+    }
+    entries.forEach(([key, value]) => this.set(key, value));
   }
 
   toString() {
