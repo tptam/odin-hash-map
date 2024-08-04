@@ -24,9 +24,17 @@ class HashMap {
     return hashCode;
   }
 
+  #getBucket(key) {
+    const index = this.hash(key);
+    if (index < 0 || index >= this.#buckets.length) {
+      throw new Error("Trying to access index out of bound");
+    }
+    const bucket = this.#buckets[index];
+    return bucket;
+  }
+
   set(key, value) {
-    const hashCode = this.hash(key);
-    const bucket = this.#buckets[hashCode];
+    const bucket = this.#getBucket(key);
     const node = bucket.find(key);
     if (node === null) {
       bucket.append(key, value);
@@ -40,8 +48,7 @@ class HashMap {
   }
 
   get(key) {
-    const hashCode = this.hash(key);
-    const bucket = this.#buckets[hashCode];
+    const bucket = this.#getBucket(key);
     const node = bucket.find(key);
     if (node === null) {
       return null;
@@ -51,15 +58,13 @@ class HashMap {
   }
 
   has(key) {
-    const hashCode = this.hash(key);
-    const bucket = this.#buckets[hashCode];
+    const bucket = this.#getBucket(key);
     const node = bucket.find(key);
     return node !== null;
   }
 
   remove(key) {
-    const hashCode = this.hash(key);
-    const bucket = this.#buckets[hashCode];
+    const bucket = this.#getBucket(key);
     const index = bucket.findIndex(key);
     if (index === null) {
       return false;
@@ -120,10 +125,10 @@ class HashMap {
     // https://www.geeksforgeeks.org/load-factor-in-hashmap-in-java-with-examples/
     const entries = this.entries();
     this.clear();
-    this.#capacity *= 2;
-    for (let i = this.#capacity / 2; i < this.#capacity; i++) {
-      this.#buckets[i] = new LinkedList();
+    for (let i = 0; i < this.#capacity; i++) {
+      this.#buckets.push(new LinkedList());
     }
+    this.#capacity *= 2;
     entries.forEach(([key, value]) => this.set(key, value));
   }
 
