@@ -39,6 +39,20 @@ class HashMap {
     }
   }
 
+  get(key) {
+    const hashCode = this.hash(key);
+    const bucket = this.#buckets[hashCode];
+    if (bucket === null) {
+      return null;
+    }
+    const node = bucket.find(key);
+    if (node === null) {
+      return null;
+    } else {
+      return node.value;
+    }
+  }
+
   toString() {
     let string = "";
     this.#buckets.forEach((bucket, index) => {
