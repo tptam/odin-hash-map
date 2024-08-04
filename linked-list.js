@@ -111,6 +111,21 @@ class LinkedList {
     }
     return null;
   }
+  findIndex(key) {
+    if (this.#head === undefined) {
+      return null;
+    }
+    let current = this.#head;
+    let count = 0;
+    while (current !== null) {
+      if (current.key === key) {
+        return count;
+      }
+      count++;
+      current = current.nextNode;
+    }
+    return null;
+  }
   toString() {
     if (this.#head === undefined) {
       return "";
