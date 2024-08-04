@@ -9,7 +9,7 @@ class HashMap {
   constructor() {
     this.#buckets = [];
     for (let i = 0; i < this.#capacity; i++) {
-      this.#buckets.push(null);
+      this.#buckets.push(new LinkedList());
     }
   }
 
@@ -25,12 +25,6 @@ class HashMap {
   set(key, value) {
     const hashCode = this.hash(key);
     const bucket = this.#buckets[hashCode];
-    if (bucket === null) {
-      const list = new LinkedList();
-      list.append(key, value);
-      this.#buckets[hashCode] = list;
-      return;
-    }
     const node = bucket.find(key);
     if (node === null) {
       bucket.append(key, value);
@@ -42,9 +36,6 @@ class HashMap {
   get(key) {
     const hashCode = this.hash(key);
     const bucket = this.#buckets[hashCode];
-    if (bucket === null) {
-      return null;
-    }
     const node = bucket.find(key);
     if (node === null) {
       return null;
@@ -56,9 +47,6 @@ class HashMap {
   has(key) {
     const hashCode = this.hash(key);
     const bucket = this.#buckets[hashCode];
-    if (bucket === null) {
-      return false;
-    }
     const node = bucket.find(key);
     return node !== null;
   }
@@ -66,11 +54,7 @@ class HashMap {
   toString() {
     let string = "";
     this.#buckets.forEach((bucket, index) => {
-      if (bucket === null) {
-        string += `${index}: null` + "\n";
-      } else {
-        string += `${index}: ${bucket.toString()}` + "\n";
-      }
+      string += `${index}: ${bucket.toString()}` + "\n";
     });
     return string;
   }
