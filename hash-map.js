@@ -86,6 +86,18 @@ class HashMap {
     return result;
   }
 
+  values() {
+    const result = [];
+    this.#buckets.forEach((bucket) => {
+      let current = bucket.head();
+      while (current !== undefined && current !== null) {
+        result.push(current.value);
+        current = current.nextNode;
+      }
+    });
+    return result;
+  }
+
   toString() {
     let string = "";
     this.#buckets.forEach((bucket, index) => {
