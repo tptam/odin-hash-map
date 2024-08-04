@@ -69,6 +69,11 @@ class HashMap {
     return this.#length;
   }
 
+  clear() {
+    this.#buckets.forEach((bucket) => bucket.clear());
+    this.#length = 0;
+  }
+
   toString() {
     let string = "";
     this.#buckets.forEach((bucket, index) => {
