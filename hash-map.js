@@ -3,6 +3,10 @@ class HashMap {
   #loadFactor = 0.8;
   #buckets;
 
+  constructor() {
+    buckets = [];
+  }
+
   hash(key) {
     let hashCode = 0;
     const primeNumber = 31;
